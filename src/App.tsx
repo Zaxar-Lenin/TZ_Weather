@@ -1,26 +1,39 @@
-import React from 'react';
+import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {CardTown} from "./components/CardTown";
+import {ModelWindowAdd} from "./assets/modelWindow/ModelWindowAdd";
+import {useAppDispatch, useAppSelector} from "./hooks/hooks";
+import Preloader from "./common/preloader/Preloader";
+import {getWeatherForTheCity} from "./store/reducer/reducerWeather";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [activeAdd, setActiveAdd] = useState(false)
+
+    const arrCards = useAppSelector(state => state.reducerWeather.cardTown)
+
+    const isLoaded = useAppSelector(state => state.reducerWeather.isLoaded)
+
+    const dispatch = useAppDispatch();
+
+    const openModelWindow = () => {
+        setActiveAdd(true)
+    }
+
+
+    if(!isLoaded){
+        return <Preloader/>
+    }
+
+    return (
+        <div className="App">
+            {arrCards.map(m => <CardTown name={m.name} key ={m.id} temp={m.main.temp} weather={m.weather[0].main} country={m.sys.country} humidity={m.main.humidity}/>)}
+            <div className="App__button-ball" onClick={openModelWindow}>
+                <span></span>
+            </div>
+            <ModelWindowAdd setActive={setActiveAdd} active={activeAdd}/>
+        </div>
+    );
 }
 
 export default App;
