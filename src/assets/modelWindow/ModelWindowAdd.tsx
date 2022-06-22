@@ -1,8 +1,8 @@
-import React, {MouseEvent} from 'react';
+import React, {MouseEvent, MouseEventHandler} from 'react';
 import s from "./ModelWindow.module.css"
 import {useFormik} from "formik";
 import {useAppDispatch} from '../../hooks/hooks';
-import {getWeatherForTheCity} from "../../store/reducer/reducerWeather";
+import {createWeatherForTheCity} from "../../store/reducer/reducerWeather";
 
 type ModelWindowAddPropsType = {
     setActive: (n: boolean) => void
@@ -21,7 +21,8 @@ export const ModelWindowAdd = ({
             name: "",
         },
         onSubmit: values => {
-            dispatch(getWeatherForTheCity(values.name))
+            dispatch(createWeatherForTheCity(values.name))
+            values.name = ""
             setActive(false)
         },
     });
@@ -30,20 +31,29 @@ export const ModelWindowAdd = ({
         setActive(false)
     }
 
-    const modelContenHandler = (e: MouseEvent<HTMLDivElement>) => {
+    const modelContentHandler = (e: MouseEvent<HTMLDivElement>) => {
         e.stopPropagation()
     }
+
+    const modelClearHandler = (e: MouseEvent<HTMLDivElement>) => {
+        e.stopPropagation()
+        formik.values.name = ""
+    }
+
+
 
     let classWindow = active ? (s.active + " " + s.model) : s.model
     let classContent = active ? (s.active + " " + s.model__content) : s.model__content
 
     return (
         <div className={classWindow} onClick={modelWindowHandler}>
-            <div className={classContent} onClick={modelContenHandler}>
+            <div className={classContent} onClick={modelContentHandler}>
                 <form onSubmit={formik.handleSubmit}>
-                    <div className={s.title}>Add new card</div>
+                    <div className={s.title}>Choose a city</div>
+                    <div className={s.subtitle}>To find city start typing and pick one form the suggestions</div>
                     <div className={s.textInput}>
                         <input
+                            autoFocus
                             style={{
                                 width: '100%'
                             }}
@@ -51,25 +61,46 @@ export const ModelWindowAdd = ({
                         />
                     </div>
                     <div className={s.buttons}>
-                        <button
+                        <div
                             style={{
-                                borderRadius: '15px',
-                                width: '120px',
-                                height: '35px',
-                                backgroundColor: "gray",
-                                textTransform: 'initial',
-                                fontSize: '14px'
+                                border: "none",
+                                backgroundColor: "#fff",
+                                textTransform: "uppercase",
+                                fontSize: "20px",
+                                color: "#b28888",
+                                margin: "10px 0 0 20px",
+                                cursor: "pointer",
                             }}
-                            onClick={modelWindowHandler}>Chanel</button>
-                        <button
-                            type={"submit"}
-                            style={{
-                                borderRadius: '15px',
-                                width: '120px',
-                                height: '35px',
-                                textTransform: 'initial',
-                                fontSize: '14px'
-                            }}>Save</button>
+                            onClick={modelClearHandler}>Clear
+                        </div>
+                        <div className = {s.buttons__boxRieght}>
+                            <div
+                                style={{
+                                    border: "none",
+                                    backgroundColor: "#fff",
+                                    textTransform: "uppercase",
+                                    fontSize: "20px",
+                                    color: "#a59be8",
+                                    margin: "10px 0 0 20px",
+                                    cursor: "pointer",
+                                }}
+                                onClick={modelWindowHandler}>Chanel
+                            </div>
+                            <div>
+                                <button
+                                    type={"submit"}
+                                    style={{
+                                        border: "none",
+                                        backgroundColor: "#fff",
+                                        textTransform: "uppercase",
+                                        fontSize: "20px",
+                                        color: "#b28888",
+                                        margin: "10px 0 0 20px",
+                                        cursor: "pointer",
+                                    }}>Add
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>

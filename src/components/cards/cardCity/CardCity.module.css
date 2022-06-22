@@ -1,0 +1,42 @@
+.card{
+    display: flex;
+    flex-direction: column;
+    margin: 15px;
+    height: 400px;
+    width: 300px;
+    border-radius: 5px;
+    padding: 10px 25px;
+    box-shadow:  0 0 10px 5px rgb(208, 204, 204);
+}
+.card__box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+    padding: 10px 0;
+    border-bottom: 1px solid #aba8a8;
+}
+
+.boxDown{
+    align-self: end;
+}
+
+
+.boxDown__time{
+    margin: 10px 0;
+}
+
+
+
+.boxDownTwo{
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.boxDownTwo__button{
+    font-size: 20px;
+    color: darkorchid;
+    text-transform: uppercase;
+    cursor: pointer;
+}

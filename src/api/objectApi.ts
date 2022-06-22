@@ -1,8 +1,11 @@
 import {instance, KEY} from "./instance";
-import {ResponseType} from "../types/types";
+import {ResponseCityType, ResponseCurrentCityType} from "../types/types";
 
 export const weatherApi = {
-    cityWeatherQuery(city: string) {
-        return instance.get<ResponseType>(`weather?q=${city}&APPID=${KEY}`)
+    getCity(city: string) {
+        return instance.get<ResponseCityType>(`weather?q=${city}&APPID=${KEY}&units=metric`)
+    },
+    getCurrentCity(latitude: number | undefined, longitude: number | undefined,) {
+        return instance.get<ResponseCurrentCityType>(`forecast?lat=${latitude}&lon=${longitude}&APPID=${KEY}&units=metric`)
     }
 }

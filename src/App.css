@@ -1,9 +1,32 @@
 .App {
+    position: relative;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.title{
+    font-size: 56px;
+    font-weight: lighter;
+}
+
+.text{
+    font-size: 16px;
+    margin: 0 0 30px 0;
+}
+
+.cards{
+    margin: 50px 0 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 .App__button-ball {
-    position: relative;
+    position: fixed;
+    /*position: relative;*/
+    bottom: 10px;
+    right: 10px;
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -73,5 +96,16 @@
     }
     to {
         transform: rotate(360deg);
+    }
+}
+
+
+@media (max-width: 940px) {
+    .cards{
+        width: 600px;
+        margin: 50px auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
     }
 }
